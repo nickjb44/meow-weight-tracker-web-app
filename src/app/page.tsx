@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {SignedIn, SignedOut, SignInButton, SignUp, UserButton} from "@clerk/nextjs";
+import {SignedIn, SignedOut, SignInButton, SignUp, SignUpButton, UserButton} from "@clerk/nextjs";
 import {TopNav} from "~/app/_components/topnav";
 
 export default async function Home() {
@@ -14,8 +14,8 @@ export default async function Home() {
             </header>
             <div className="content text-center py-10">
                 <SignedOut>
-                    <SignInButton />
-                    <SignUp />
+                    <StyledSignInButton />
+                    <StyledSignUpButton />
                 </SignedOut>
                 <SignedIn>
                     <UserButton />
@@ -28,3 +28,14 @@ export default async function Home() {
       </div>
   );
 }
+const StyledSignInButton = () => (
+    <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <SignInButton />
+    </div>
+);
+
+const StyledSignUpButton = () => (
+    <div className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        <SignUpButton />
+    </div>
+);
