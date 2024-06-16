@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import {ClerkProvider} from "@clerk/nextjs";
+import {SpeedInsights} from "@vercel/speed-insights/next";
 
 export const metadata = {
   title: "Meow weight tracker",
@@ -17,12 +18,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-      <ClerkProvider>
-        <html lang="en" className={`${GeistSans.variable}`}>
+      <div>
+        <SpeedInsights/>
+        <ClerkProvider>
+          <html lang="en" className={`${GeistSans.variable}`}>
           <body>
-            <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
           </body>
-        </html>
-      </ClerkProvider>
+          </html>
+        </ClerkProvider>
+      </div>
   );
 }
