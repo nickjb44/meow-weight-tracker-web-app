@@ -18,15 +18,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-      <div>
-        <SpeedInsights/>
         <ClerkProvider>
           <html lang="en" className={`${GeistSans.variable}`}>
           <body>
-          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TRPCReactProvider>
+              <SpeedInsights/>
+              {children}
+          </TRPCReactProvider>
           </body>
           </html>
         </ClerkProvider>
-      </div>
   );
 }
