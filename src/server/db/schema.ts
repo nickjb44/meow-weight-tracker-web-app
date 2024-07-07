@@ -3,8 +3,8 @@
 
 import {
     date, decimal,
-    index, integer,
-    pgTableCreator,
+    index, integer, pgEnum,
+    pgTableCreator, primaryKey,
     serial,
     timestamp,
     varchar,
@@ -36,7 +36,7 @@ export const EatingHistory = createTable(
         PetID: integer('PetID').references(() => Pets.PetID),
         Date: date('Date'),
         CreatedAtUTC: timestamp("CreationTime"),
-        WeighedAtUTC: timestamp("WeightTime"),
+        FedAtUTC: timestamp("FeedingTime"),
         Food: varchar('Food'),
         Quantity: decimal('Quantity'),
     },
@@ -58,3 +58,38 @@ export const WeightHistory = createTable(
         petIndex: index('weight_history_pet_index').on(weight_history.PetID),
     })
 );
+
+export const Users = createTable(
+    "users",
+    {
+        UserID: varchar('UserID', {length: 256}).primaryKey(),
+        CreatedAt: timestamp("CreationTime"),
+        UpdatedAt: timestamp('UpdatedTime')
+    },
+    (users) => ({
+        userIndex : index('user_id_index').on(users.UserID),
+    })
+)
+
+export const RoleEnum = pgEnum('Role', [
+    'Owner',
+    'Editor',
+    'Viewer'
+])
+
+export const PetPeople = createTable(
+    "pet_people",
+    {
+        UserID: varchar('UserID').references(() => Users.UserID),
+        PetID: integer('PetID').references(() => Pets.PetID),
+        CreatedAt: timestamp("CreationTime"),
+        UpdatedAt: timestamp('UpdatedTime'),
+        Role: RoleEnum('Role')
+    },
+    (petPeople) => ({
+        userIndex: index('pet_people_user_id_index').on(petPeople.UserID),
+        petIndex: index('pet_people_pet_id_index').on(petPeople.PetID),
+        pk: primaryKey({ columns: [petPeople.UserID, petPeople.PetID]})
+    })
+)
+
