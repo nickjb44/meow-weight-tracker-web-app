@@ -25,6 +25,7 @@ export const petRouter = createTRPCRouter({
 
                 if (!newPet) {
                     trx.rollback()
+                    // TODO : make error more informative
                     throw new Error("Failed to create the pet entry")
                 }
 
