@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const insertPetRequestInput = z.object({
+export const createPetRequestInput = z.object({
     species: z.string(),
     gender: z.string(),
     name: z.string(),
@@ -8,4 +8,4 @@ export const insertPetRequestInput = z.object({
     userId: z.string()
 })
 
-export type InsertPetRequestInput = z.infer<typeof insertPetRequestInput>;
+export type CreatePetRequestInput = z.infer<typeof createPetRequestInput>;

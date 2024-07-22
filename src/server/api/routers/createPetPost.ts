@@ -1,11 +1,11 @@
 import {createTRPCRouter, publicProcedure} from "~/server/api/trpc";
 import {db} from "~/server/db";
-import {insertPetRequestInput} from "~/schema/insertPetRequestInput";
+import {createPetRequestInput} from "~/schema/createPetRequestInput";
 import {PetPeople, Pets} from "~/server/db/schema";
 
 export const petRouter = createTRPCRouter({
     insertPet: publicProcedure
-        .input(insertPetRequestInput)
+        .input(createPetRequestInput)
         .mutation(async ({input}) => {
             const {species, gender, name, age, userId} = input;
 
