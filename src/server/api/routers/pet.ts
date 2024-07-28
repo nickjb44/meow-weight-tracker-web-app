@@ -2,6 +2,8 @@ import {createTRPCRouter, publicProcedure} from "~/server/api/trpc";
 import {db} from "~/server/db";
 import {createPetRequestInput} from "~/schema/createPetRequestInput";
 import {PetPeople, Pets} from "~/server/db/schema";
+import {getPetsRequest} from "~/schema/getPetsRequest";
+import {eq} from "drizzle-orm/expressions";
 
 export const petRouter = createTRPCRouter({
     insertPet: publicProcedure
@@ -41,4 +43,15 @@ export const petRouter = createTRPCRouter({
                 return newPet;
             });
         }),
+    // TODO: update to enforce the userId is equal to the logged in user
+    getPets: publicProcedure
+        .input(getPetsRequest)
+        .query(async ({input}) => {
+            const { userId } = input;
+            return await db.select()
+                .from(Pets)
+                .innerJoin(PetPeople, eq(Pets.PetID, PetPeople.PetID))
+                .where(eq(PetPeople.UserID, userId))
+                .execute()
+            }),
 });
