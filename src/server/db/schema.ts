@@ -1,6 +1,3 @@
-// Example model schema from the Drizzle docs
-// https://orm.drizzle.team/docs/sql-schema-declaration
-
 import {
     date, decimal,
     index, integer, pgEnum,
@@ -27,22 +24,6 @@ export const Pets = createTable(
         Name: varchar('Name'),
         Age: integer('Age'),
     }
-);
-
-export const EatingHistory = createTable(
-    "eating_history",
-    {
-        EntryID: serial("EntryID").primaryKey(),
-        PetID: integer('PetID').references(() => Pets.PetID),
-        Date: date('Date'),
-        CreatedAtUTC: timestamp("CreationTime"),
-        FedAtUTC: timestamp("FeedingTime"),
-        Food: varchar('Food'),
-        Quantity: decimal('Quantity'),
-    },
-    (eating_history) => ({
-        petIndex: index('eating_history_pet_index').on(eating_history.PetID),
-    })
 );
 
 export const WeightHistory = createTable(
@@ -93,3 +74,38 @@ export const PetPeople = createTable(
     })
 )
 
+export const PetFood = createTable(
+    "pet_food",
+    {
+        FoodID: serial("FoodID").primaryKey(),
+        Name: varchar("Name", { length: 256 }),
+        Brand: varchar("Brand", { length: 256 }),
+        CaloriesPerGram: decimal("CaloriesPerGram"),
+        CaloriesPerLiter: decimal("CaloriesPerLiter"),
+        ProteinPercent: decimal("ProteinPercent", { nullable: true }), // Optional macro
+        FatPercent: decimal("FatPercent", { nullable: true }), // Optional macro
+        CarbsPercent: decimal("CarbsPercent", { nullable: true }), // Optional macro
+        Notes: varchar("Notes", { length: 1024, nullable: true }), // Any other useful information
+        CreatedAtUTC: timestamp("CreatedTime"),
+        UpdatedAtUTC: timestamp("UpdatedTime"),
+    },
+    (petFood) => ({
+        foodIndex: index("pet_food_name_index").on(petFood.Name), // Index for fast lookup by name
+    })
+)
+
+export const EatingHistory = createTable(
+    "eating_history",
+    {
+        EntryID: serial("EntryID").primaryKey(),
+        PetID: integer('PetID').references(() => Pets.PetID),
+        Date: date('Date'),
+        CreatedAtUTC: timestamp("CreationTime"),
+        FedAtUTC: timestamp("FeedingTime"),
+        FoodID: integer("FoodID").references(() => PetFood.FoodID), // Link to PetFood table
+        Quantity: decimal('Quantity'),
+    },
+    (eating_history) => ({
+        petIndex: index('eating_history_pet_index').on(eating_history.PetID),
+    })
+);
