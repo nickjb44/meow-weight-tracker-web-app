@@ -1,7 +1,6 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import { WeightHistory } from "~/server/db/schema";
-import { z } from "zod";
 import { getWeightHistoryInput } from "~/schema/getPetWeightInput";
 import { recordWeightInput } from "~/schema/recordPetWeightInput";
 
@@ -17,7 +16,7 @@ export const weightRouter = createTRPCRouter({
                 PetID: petId,
                 Weight: weight,
                 CreatedUTC: new Date(), // When the record was created
-                WeightedUTC: recordedAt || new Date(), // When the weight was recorded
+                WeightedUTC: recordedAt ?? new Date(), // When the weight was recorded
             }).returning({
                 RecordID: WeightHistory.RecordID,
                 PetID: WeightHistory.PetID,
