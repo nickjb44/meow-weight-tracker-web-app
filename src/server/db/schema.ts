@@ -82,10 +82,10 @@ export const PetFood = createTable(
         Brand: varchar("Brand", { length: 256 }),
         CaloriesPerGram: decimal("CaloriesPerGram"),
         CaloriesPerLiter: decimal("CaloriesPerLiter"),
-        ProteinPercent: decimal("ProteinPercent").default(null), // Optional macro
-        FatPercent: decimal("FatPercent").default(null), // Optional macro
-        CarbsPercent: decimal("CarbsPercent").default(null), // Optional macro
-        Notes: varchar("Notes", { length: 1024 }).default(null), // Any other useful information
+        ProteinPercent: decimal("ProteinPercent"), // Optional macro
+        FatPercent: decimal("FatPercent"), // Optional macro
+        CarbsPercent: decimal("CarbsPercent"), // Optional macro
+        Notes: varchar("Notes", { length: 1024 }), // Any other useful information
         CreatedAtUTC: timestamp("CreatedTime"),
         UpdatedAtUTC: timestamp("UpdatedTime"),
     },
