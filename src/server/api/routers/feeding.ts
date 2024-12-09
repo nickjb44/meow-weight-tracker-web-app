@@ -1,7 +1,8 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import { EatingHistory } from "~/server/db/schema";
-import { z } from "zod";
+import { getFeedingHistoryInput } from "~/schema/getFeedingHistoryInput";
+import { recordFeedingInput } from "~/schema/recordFeedingInput";
 
 export const feedingRouter = createTRPCRouter({
     // Endpoint to record a pet's feeding
