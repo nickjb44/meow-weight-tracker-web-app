@@ -16,7 +16,7 @@ export const feedingRouter = createTRPCRouter({
                 FoodID: foodId,
                 Quantity: quantity,
                 CreatedAtUTC: new Date(), // When the record was created
-                FedAtUTC: fedAt || new Date(), // When the feeding occurred
+                FedAtUTC: fedAt ?? new Date(), // When the feeding occurred
             }).returning({
                 EntryID: EatingHistory.EntryID,
                 PetID: EatingHistory.PetID,

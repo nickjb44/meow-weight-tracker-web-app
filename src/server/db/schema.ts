@@ -103,7 +103,7 @@ export const EatingHistory = createTable(
         CreatedAtUTC: timestamp("CreationTime"),
         FedAtUTC: timestamp("FeedingTime"),
         FoodID: integer("FoodID").references(() => PetFood.FoodID), // Link to PetFood table
-        Quantity: decimal('Quantity'),
+        Quantity: decimal('Quantity'), //in grams
     },
     (eating_history) => ({
         petIndex: index('eating_history_pet_index').on(eating_history.PetID),
