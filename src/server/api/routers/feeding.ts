@@ -41,7 +41,7 @@ export const feedingRouter = createTRPCRouter({
 
             const feedingHistory = await db.select()
                 .from(EatingHistory)
-                .where(EatingHistory.PetID.eq(petId))
+                .where(EatingHistory.PetID === petId)
                 .orderBy(EatingHistory.FedAtUTC.asc())
                 .execute();
 

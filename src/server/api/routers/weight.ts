@@ -40,7 +40,7 @@ export const weightRouter = createTRPCRouter({
 
             const weightHistory = await db.select()
                 .from(WeightHistory)
-                .where(WeightHistory.PetID.eq(petId))
+                .where(WeightHistory.PetID === petId)
                 .orderBy(WeightHistory.WeightedUTC.asc())
                 .execute();
 
